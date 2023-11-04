@@ -12,7 +12,7 @@ import { UserModule } from './user/user.module';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'appa',
+      database: 'testDB',
       synchronize: true,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       // logging: true,
