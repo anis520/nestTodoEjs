@@ -1,5 +1,14 @@
 <%-include("layout/header") %>
 
+<div class="px-5 pt-3 font-semibold flex gap-5">
+  <p>Request By :</p>
+  <p><%=extra.agent.slice(0,42) %></p>
+</div>
+<div class="px-5 pt-3 font-semibold flex gap-5">
+  <p>Request for :</p>
+  <p><%=extra.url %></p>
+</div>
+
 <div class="overflow-x-auto p-5 md:p-10">
   <table class="table">
     <!-- head -->

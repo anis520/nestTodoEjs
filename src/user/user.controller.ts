@@ -7,12 +7,13 @@ import {
   Param,
   Delete,
   Res,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 @Controller('')
 export class UserController {
@@ -26,22 +27,34 @@ export class UserController {
   }
 
   @Get()
-  async findAll(@Res() res: Response) {
+  async findAll(@Req() req: Request, @Res() res: Response) {
     const getdata = await this.userService.findAll();
 
-    return res.render('index', { data: getdata });
+    return res.render('index', {
+      data: getdata,
+      extra: { agent: req.get('user-agent'), url: req.url },
+    });
   }
 
   @Get('/add')
-  add(@Res() res: Response) {
-    return res.render('add');
+  add(@Req() req: Request, @Res() res: Response) {
+    return res.render('add', {
+      extra: { agent: req.get('user-agent'), url: req.url },
+    });
   }
   @Get('/update/:id')
-  async update(@Res() res: Response, @Param('id') id: number) {
+  async update(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Param('id') id: number,
+  ) {
     const alldata = await this.userService.findAll();
     const getsingledata = alldata.find((item) => item.id == id);
 
-    return res.render('update', { data: getsingledata });
+    return res.render('update', {
+      data: getsingledata,
+      extra: { agent: req.get('user-agent'), url: req.url },
+    });
   }
   @Post('/update/:id')
   updateByData(
@@ -56,8 +69,6 @@ export class UserController {
 
   @Patch(':id')
   updateById(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    console.log('targeted' + updateUserDto);
-
     return this.userService.update(+id, updateUserDto);
   }
 
