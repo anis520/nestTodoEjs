@@ -48,11 +48,10 @@ export class UserController {
     @Req() req: Request,
     @Param('id') id: number,
   ) {
-    const alldata = await this.userService.findAll();
-    const getsingledata = alldata.find((item) => item.id == id);
+    const singleData = await this.userService.findOne(id);
 
     return res.render('update', {
-      data: getsingledata,
+      data: singleData,
       extra: { agent: req.get('user-agent'), url: req.url },
     });
   }

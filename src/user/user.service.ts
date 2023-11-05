@@ -23,9 +23,11 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  // findOne(id: number) {
-  //   return this.userRepository.findOne(id);
-  // }
+  findOne(id: number) {
+    return this.userRepository.findOne({
+      where: { id },
+    });
+  }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     const user: User = new User();
